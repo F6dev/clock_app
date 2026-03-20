@@ -2,16 +2,21 @@
 
 A new Flutter project.
 
-## Getting Started
+## アプリの概要
+シンプルな時計アプリのベータ版です。最初はFlutterの勉強として置き時計アプリを開発していましたが、ちゃんとしたアプリを作ろうと思ってこのアプリを開発し始めた感じです。
 
-This project is a starting point for a Flutter application.
+## 対応OS
+iOS: 未対応
+Android: バージョン5.0 (APIレベル: 21) 以上
+Windows: 未対応
+macOS: 未対応
+Linux: 未対応
 
-A few resources to get you started if this is your first Flutter project:
-
-- [Learn Flutter](https://docs.flutter.dev/get-started/learn-flutter)
-- [Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Flutter learning resources](https://docs.flutter.dev/reference/learning-resources)
-
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+## 実装予定
+* 時計
+* 設定
+    * フォントサイズとフォントファミリーの選択
+    * 12h/24hの設定
+    * タイムゾーンの変更
+    * 端末の日付と時刻の変更 (設定アプリを開く)
+    * アプリの時間の調整 (一日の開始時刻と終了時刻の調整)
