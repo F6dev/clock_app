@@ -37,8 +37,13 @@ class _ClockPageState extends State<ClockPage> {
   Widget build(BuildContext context) {
     bool isLandscape =
         MediaQuery.of(context).orientation == Orientation.landscape;
-    double timeFontSize = isLandscape ? 120 : 90;
-    double dateFontSize = isLandscape ? 80 : 60;
+    /*
+    double timeFontSize = isLandscape ? 150 : 90;
+    double dateFontSize = isLandscape ? 100 : 60;
+    */
+    double screenWidth = MediaQuery.of(context).size.width;
+    double timeFontSize = isLandscape ? screenWidth * 0.15 : screenWidth * 0.23;
+    double dateFontSize = isLandscape ? screenWidth * 0.1 : screenWidth * 0.18;
     // ページの見た目を変更する
     String hour = _now.hour.toString();
     String minute = _now.minute.toString().padLeft(2, '0');
@@ -54,11 +59,19 @@ class _ClockPageState extends State<ClockPage> {
           children: [
             Text(
               "$hour:$minute:$second",
-              style: TextStyle(color: Colors.white, fontSize: timeFontSize),
+              style: TextStyle(
+                color: Colors.white,
+                fontSize: timeFontSize,
+                fontFamily: 'LINESeedJP',
+              ),
             ),
             Text(
               "$year/$month/$day",
-              style: TextStyle(color: Colors.white, fontSize: dateFontSize),
+              style: TextStyle(
+                color: Colors.white,
+                fontSize: dateFontSize,
+                fontFamily: 'LINESeedJP',
+              ),
             ),
           ],
         ),
