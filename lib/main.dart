@@ -47,6 +47,7 @@ class _HomePageState extends State<HomePage> {
 
   @override
   Widget build(BuildContext context) {
+    final appState = context.watch<AppState>();
     bool isLandscape =
         MediaQuery.of(context).orientation == Orientation.landscape;
 
@@ -64,14 +65,14 @@ class _HomePageState extends State<HomePage> {
                   _currentIndex = index;
                 });
               },
-              items: const [
+              items: [
                 BottomNavigationBarItem(
                   icon: Icon(Icons.access_time),
-                  label: 'Clock',
+                  label: appState.language == 'ja' ? '時計' : 'Clock',
                 ),
                 BottomNavigationBarItem(
                   icon: Icon(Icons.settings),
-                  label: 'Settings',
+                  label: appState.language == 'ja' ? '設定' : 'Settings',
                 ),
               ],
             ),

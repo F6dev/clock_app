@@ -27,7 +27,10 @@ class FontSettingsPage extends StatelessWidget {
       appBar: AppBar(
         backgroundColor: Colors.black,
         iconTheme: const IconThemeData(color: Colors.white),
-        title: const Text('フォント', style: TextStyle(color: Colors.white)),
+        title: Text(
+          appState.language == 'ja' ? 'フォント' : 'Font',
+          style: TextStyle(color: Colors.white),
+        ),
       ),
       body: ListView.builder(
         itemCount: fonts.length,

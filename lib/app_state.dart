@@ -19,4 +19,13 @@ class AppState extends ChangeNotifier {
     _timeFontSizePortrait = size;
     notifyListeners();
   }
+
+  String _language = 'ja';
+
+  String get language => _language;
+
+  void setLanguage(String language) {
+    _language = language;
+    notifyListeners();
+  }
 }
