@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'app_state.dart';
 import 'pages/clock_page.dart';
 import 'pages/settings_page.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 void main() {
   runApp(const MyApp());
@@ -11,7 +14,22 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const MaterialApp(home: HomePage());
+    return ChangeNotifierProvider(
+      create: (_) => AppState(),
+      child: Consumer<AppState>(
+        builder: (context, appState, child) {
+          return MaterialApp(
+            theme: ThemeData(
+              fontFamily: appState.isLocalFont ? appState.fontFamily : null,
+              textTheme: appState.isLocalFont
+                  ? null
+                  : GoogleFonts.getTextTheme(appState.fontFamily),
+            ),
+            home: const HomePage(),
+          );
+        },
+      ),
+    );
   }
 }
 
@@ -49,11 +67,11 @@ class _HomePageState extends State<HomePage> {
               items: const [
                 BottomNavigationBarItem(
                   icon: Icon(Icons.access_time),
-                  label: '時計',
+                  label: 'Clock',
                 ),
                 BottomNavigationBarItem(
                   icon: Icon(Icons.settings),
-                  label: '設定',
+                  label: 'Settings',
                 ),
               ],
             ),

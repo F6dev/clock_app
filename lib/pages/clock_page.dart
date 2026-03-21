@@ -1,50 +1,65 @@
 import 'package:flutter/material.dart';
 import 'dart:async';
+import 'package:provider/provider.dart';
+import '../app_state.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 class ClockPage extends StatefulWidget {
-  // アプリの本体を、StatefulWidgetを継承して作る
-  const ClockPage({super.key}); // ページを初期化
+  const ClockPage({super.key});
 
   @override
-  State<ClockPage> createState() => _ClockPageState(); // 対になる_ClockPageStateクラスを指定
+  State<ClockPage> createState() => _ClockPageState();
 }
 
 class _ClockPageState extends State<ClockPage> {
-  // 実際の状態と画面描画を担当するクラス
-  late DateTime _now; // 現在時刻を取得して保持する
-  late Timer _timer; // 1秒ごとに時刻を更新する
+  late DateTime _now;
+  late Timer _timer;
   @override
   void initState() {
-    // Widgetが画面に表示される瞬間に1回だけ実行される
     super.initState();
-    _now = DateTime.now(); // 現在時刻を取得する
+    _now = DateTime.now();
     _timer = Timer.periodic(const Duration(seconds: 1), (timer) {
-      // 1秒ごとに処理を繰り返す
       setState(() {
-        // 画面を再描画する
         _now = DateTime.now();
       });
     });
+  }
+
+  TextStyle _buildTextStyle(AppState appState, double fontSize) {
+    if (appState.isLocalFont) {
+      return TextStyle(
+        fontFamily: appState.fontFamily,
+        fontWeight: FontWeight.w100,
+        color: Colors.white,
+        fontSize: fontSize,
+      );
+    } else {
+      return GoogleFonts.getFont(
+        appState.fontFamily,
+        color: Colors.white,
+        fontSize: fontSize,
+      );
+    }
   }
 
   @override
   void dispose() {
     _timer.cancel();
     super.dispose();
-  } // Widgetが画面から消えた時にタイマーをキャンセルすることで、メモリ消費を抑える
+  }
 
   @override
   Widget build(BuildContext context) {
+    final appState = context.watch<AppState>();
+    double screenWidth = MediaQuery.of(context).size.width;
     bool isLandscape =
         MediaQuery.of(context).orientation == Orientation.landscape;
-    /*
-    double timeFontSize = isLandscape ? 150 : 90;
-    double dateFontSize = isLandscape ? 100 : 60;
-    */
-    double screenWidth = MediaQuery.of(context).size.width;
-    double timeFontSize = isLandscape ? screenWidth * 0.15 : screenWidth * 0.23;
-    double dateFontSize = isLandscape ? screenWidth * 0.1 : screenWidth * 0.18;
-    // ページの見た目を変更する
+    double timeFontSize = isLandscape
+        ? screenWidth * appState.timeFontSizePortrait * 0.75
+        : screenWidth * appState.timeFontSizePortrait;
+    double dateFontSize = isLandscape
+        ? screenWidth * appState.timeFontSizePortrait * 0.5
+        : screenWidth * appState.timeFontSizePortrait * 0.75;
     String hour = _now.hour.toString();
     String minute = _now.minute.toString().padLeft(2, '0');
     String second = _now.second.toString().padLeft(2, '0');
@@ -59,19 +74,11 @@ class _ClockPageState extends State<ClockPage> {
           children: [
             Text(
               "$hour:$minute:$second",
-              style: TextStyle(
-                color: Colors.white,
-                fontSize: timeFontSize,
-                fontFamily: 'LINESeedJP',
-              ),
+              style: _buildTextStyle(appState, timeFontSize),
             ),
             Text(
               "$year/$month/$day",
-              style: TextStyle(
-                color: Colors.white,
-                fontSize: dateFontSize,
-                fontFamily: 'LINESeedJP',
-              ),
+              style: _buildTextStyle(appState, dateFontSize),
             ),
           ],
         ),
