@@ -21,34 +21,50 @@ class SettingsPage extends StatelessWidget {
       ),
       body: ListView(
         children: [
-          _sectionHeader(appState.language == 'ja' ? '一般設定' : 'General'),
-            _settingsTile(context, appState.language == 'ja' ? '言語' : 'Language', appState.language == 'ja' ? '日本語' : 'English', () {
-            Navigator.push(
-              context,
-              MaterialPageRoute(builder: (_) => const LanguageSettingsPage()),
-            );
-          }),
-          _settingsTile(context, appState.language == 'ja' ? 'フォント設定' : 'Font Settings', '', () {
-            Navigator.push(
-              context,
-              MaterialPageRoute(builder: (_) => const FontSettingsPage()),
-            );
-          }),
-          _settingsTile(context, appState.language == 'ja' ? 'Coffee' : 'Coffee', '', null),
-          _sectionHeader(appState.language == 'ja' ? '時計設定' : 'Clock Settings'),
-          _settingsTile(context, appState.language == 'ja' ? 'システム時刻を編集' : 'Edit System Time', '', null),
-          _settingsTile(context, appState.language == 'ja' ? 'アプリの時間の調整' : 'Edit App Time', '', null),
+          _settingsTile(
+            context,
+            appState.language == 'ja' ? '言語' : 'Language',
+            appState.language == 'ja' ? '日本語' : 'English',
+            () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (_) => const LanguageSettingsPage()),
+              );
+            },
+          ),
+          _settingsTile(
+            context,
+            appState.language == 'ja' ? 'フォント設定' : 'Font Settings',
+            '',
+            () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (_) => const FontSettingsPage()),
+              );
+            },
+          ),
+          SwitchListTile(
+            title: Text(
+              appState.language == 'ja' ? 'Coffee' : 'Coffee',
+              style: const TextStyle(color: Colors.white),
+            ),
+            subtitle: Text(
+              appState.language == 'ja' ? 'スリープしない' : 'Keep awake',
+              style: const TextStyle(color: Colors.grey),
+            ),
+            value: appState.coffee,
+            onChanged: (value) {
+              appState.setCoffee(value);
+            },
+            activeColor: Colors.white,
+          ),
+          _settingsTile(
+            context,
+            appState.language == 'ja' ? 'アプリの時間の調整' : 'Time Adjustment',
+            '',
+            null,
+          ),
         ],
-      ),
-    );
-  }
-
-  Widget _sectionHeader(String title) {
-    return Padding(
-      padding: const EdgeInsets.fromLTRB(16, 24, 16, 8),
-      child: Text(
-        title,
-        style: const TextStyle(color: Colors.grey, fontSize: 14),
       ),
     );
   }
