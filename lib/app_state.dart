@@ -140,4 +140,46 @@ class AppState extends ChangeNotifier {
     await prefs.setInt('appEndMinute', _appEndMinute);
     notifyListeners();
   }
+
+  String calcAppTime(DateTime now) {
+    final gStartMs = (_globalStartHour * 3600 + _globalStartMinute * 60) * 1000;
+    final gEndMs = (_globalEndHour * 3600 + _globalEndMinute * 60) * 1000;
+    final aStartMs = (_appStartHour * 3600 + _appStartMinute * 60) * 1000;
+    final aEndMs = (_appEndHour * 3600 + _appEndMinute * 60) * 1000;
+    final nowMs =
+        (now.hour * 3600 + now.minute * 60 + now.second) * 1000 +
+        now.millisecond;
+    final gDayMs = gEndMs - gStartMs;
+    final aDayMs = aEndMs - aStartMs;
+    if (gDayMs <= 0) return '--:--:--';
+    final elapsed = nowMs - gStartMs;
+    final aElapsed = (elapsed * aDayMs / gDayMs).round();
+    final aTotalMs = aStartMs + aElapsed;
+    final aTotalSec = aTotalMs ~/ 1000;
+    final aHour = aTotalSec ~/ 3600;
+    final aMinute = (aTotalSec % 3600) ~/ 60;
+    final aSecond = aTotalSec % 60;
+    return '$aHour:${aMinute.toString().padLeft(2, '0')}:${aSecond.toString().padLeft(2, '0')}';
+  }
+
+  Map<String, int> calcAppTimeParts(DateTime now) {
+    final gStartSec = _globalStartHour * 3600 + _globalStartMinute * 60;
+    final gEndSec = _globalEndHour * 3600 + _globalEndMinute * 60;
+    final aStartSec = _appStartHour * 3600 + _appStartMinute * 60;
+    final aEndSec = _appEndHour * 3600 + _appEndMinute * 60;
+    final nowSec = now.hour * 3600 + now.minute * 60 + now.second;
+    final gDaySec = gEndSec - gStartSec;
+    final aDaySec = aEndSec - aStartSec;
+    if (gDaySec <= 0) {
+      return {'hour': now.hour, 'minute': now.minute, 'second': now.second};
+    }
+    final elapsed = nowSec - gStartSec;
+    final aElapsed = (elapsed * aDaySec / gDaySec).round();
+    final aTotalSec = aStartSec + aElapsed;
+    return {
+      'hour': aTotalSec ~/ 3600,
+      'minute': (aTotalSec % 3600) ~/ 60,
+      'second': aTotalSec % 60,
+    };
+  }
 }

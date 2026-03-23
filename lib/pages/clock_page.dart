@@ -18,7 +18,7 @@ class _ClockPageState extends State<ClockPage> {
   void initState() {
     super.initState();
     _now = DateTime.now();
-    _timer = Timer.periodic(const Duration(seconds: 1), (timer) {
+    _timer = Timer.periodic(const Duration(milliseconds: 100), (timer) {
       setState(() {
         _now = DateTime.now();
       });
@@ -60,9 +60,11 @@ class _ClockPageState extends State<ClockPage> {
     double dateFontSize = isLandscape
         ? screenWidth * appState.timeFontSizePortrait * 0.5
         : screenWidth * appState.timeFontSizePortrait * 0.75;
-    String hour = _now.hour.toString();
-    String minute = _now.minute.toString().padLeft(2, '0');
-    String second = _now.second.toString().padLeft(2, '0');
+    final appTime = appState.calcAppTime(_now);
+    final parts = appTime.split(':');
+    String hour = parts[0];
+    String minute = parts[1];
+    String second = parts[2];
     String year = (_now.year % 100).toString();
     String month = _now.month.toString();
     String day = _now.day.toString();
