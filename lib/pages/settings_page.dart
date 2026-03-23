@@ -3,6 +3,7 @@ import 'font_settings_page.dart';
 import 'language_settings_page.dart';
 import 'package:provider/provider.dart';
 import '../app_state.dart';
+import 'time_adjustment_page.dart';
 
 class SettingsPage extends StatelessWidget {
   const SettingsPage({super.key});
@@ -59,13 +60,18 @@ class SettingsPage extends StatelessWidget {
             },
             activeColor: Colors.white,
           ),
-/*           _sectionHeader(appState.language == 'ja' ? '時計設定' : 'Clock Settings'),
+          _sectionHeader(appState.language == 'ja' ? '時計設定' : 'Clock Settings'),
           _settingsTile(
             context,
             appState.language == 'ja' ? 'アプリの時間の調整' : 'Time Adjustment',
             '',
-            null,
-          ), */
+            () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (_) => const TimeAdjustmentPage()),
+              );
+            },
+          ),
           _sectionHeader(appState.language == 'ja' ? 'リセット' : 'Reset'),
           ListTile(
             title: Text(

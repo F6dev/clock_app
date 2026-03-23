@@ -28,6 +28,14 @@ class AppState extends ChangeNotifier {
     _coffee = prefs.getBool('coffee') ?? false;
     if (_coffee) WakelockPlus.enable();
     notifyListeners();
+    _globalStartHour = prefs.getInt('globalStartHour') ?? 0;
+    _globalStartMinute = prefs.getInt('globalStartMinute') ?? 0;
+    _globalEndHour = prefs.getInt('globalEndHour') ?? 24;
+    _globalEndMinute = prefs.getInt('globalEndMinute') ?? 0;
+    _appStartHour = prefs.getInt('appStartHour') ?? 0;
+    _appStartMinute = prefs.getInt('appStartMinute') ?? 0;
+    _appEndHour = prefs.getInt('appEndHour') ?? 24;
+    _appEndMinute = prefs.getInt('appEndMinute') ?? 0;
   }
 
   Future<void> setFont(String fontFamily, bool isLocal) async {
@@ -74,6 +82,62 @@ class AppState extends ChangeNotifier {
     _language = 'ja';
     _coffee = false;
     WakelockPlus.disable();
+    notifyListeners();
+    _globalStartHour = 0;
+    _globalStartMinute = 0;
+    _globalEndHour = 24;
+    _globalEndMinute = 0;
+    _appStartHour = 0;
+    _appStartMinute = 0;
+    _appEndHour = 24;
+    _appEndMinute = 0;
+  }
+
+  int _globalStartHour = 0;
+  int _globalStartMinute = 0;
+  int _globalEndHour = 24;
+  int _globalEndMinute = 0;
+  int _appStartHour = 0;
+  int _appStartMinute = 0;
+  int _appEndHour = 24;
+  int _appEndMinute = 0;
+
+  int get globalStartHour => _globalStartHour;
+  int get globalStartMinute => _globalStartMinute;
+  int get globalEndHour => _globalEndHour;
+  int get globalEndMinute => _globalEndMinute;
+  int get appStartHour => _appStartHour;
+  int get appStartMinute => _appStartMinute;
+  int get appEndHour => _appEndHour;
+  int get appEndMinute => _appEndMinute;
+
+  Future<void> setTimeAdjustment({
+    int? globalStartHour,
+    int? globalStartMinute,
+    int? globalEndHour,
+    int? globalEndMinute,
+    int? appStartHour,
+    int? appStartMinute,
+    int? appEndHour,
+    int? appEndMinute,
+  }) async {
+    if (globalStartHour != null) _globalStartHour = globalStartHour;
+    if (globalStartMinute != null) _globalStartMinute = globalStartMinute;
+    if (globalEndHour != null) _globalEndHour = globalEndHour;
+    if (globalEndMinute != null) _globalEndMinute = globalEndMinute;
+    if (appStartHour != null) _appStartHour = appStartHour;
+    if (appStartMinute != null) _appStartMinute = appStartMinute;
+    if (appEndHour != null) _appEndHour = appEndHour;
+    if (appEndMinute != null) _appEndMinute = appEndMinute;
+    final prefs = await SharedPreferences.getInstance();
+    await prefs.setInt('globalStartHour', _globalStartHour);
+    await prefs.setInt('globalStartMinute', _globalStartMinute);
+    await prefs.setInt('globalEndHour', _globalEndHour);
+    await prefs.setInt('globalEndMinute', _globalEndMinute);
+    await prefs.setInt('appStartHour', _appStartHour);
+    await prefs.setInt('appStartMinute', _appStartMinute);
+    await prefs.setInt('appEndHour', _appEndHour);
+    await prefs.setInt('appEndMinute', _appEndMinute);
     notifyListeners();
   }
 }
