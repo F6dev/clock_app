@@ -4,6 +4,7 @@ import 'language_settings_page.dart';
 import 'package:provider/provider.dart';
 import '../app_state.dart';
 import 'time_adjustment_page.dart';
+import 'about_page.dart';
 
 class SettingsPage extends StatelessWidget {
   const SettingsPage({super.key});
@@ -79,6 +80,18 @@ class SettingsPage extends StatelessWidget {
               Navigator.push(
                 context,
                 MaterialPageRoute(builder: (_) => const TimeAdjustmentPage()),
+              );
+            },
+          ),
+          _sectionHeader(appState.language == 'ja' ? 'アプリ情報' : 'App Info'),
+          _settingsTile(
+            context,
+            appState.language == 'ja' ? 'このアプリについて' : 'About',
+            '',
+            () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (_) => const AboutPage()),
               );
             },
           ),
