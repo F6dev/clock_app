@@ -5,7 +5,8 @@ import '../app_state.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 class ClockPage extends StatefulWidget {
-  const ClockPage({super.key});
+  final VoidCallback? onSettingsTap;
+  const ClockPage({super.key, this.onSettingsTap});
 
   @override
   State<ClockPage> createState() => _ClockPageState();
@@ -70,20 +71,33 @@ class _ClockPageState extends State<ClockPage> {
     String day = _now.day.toString();
     return Scaffold(
       backgroundColor: Colors.black,
-      body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Text(
-              "$hour:$minute:$second",
-              style: _buildTextStyle(appState, timeFontSize),
+      body: Stack(
+        children: [
+          Center(
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Text(
+                  "$hour:$minute:$second",
+                  style: _buildTextStyle(appState, timeFontSize),
+                ),
+                Text(
+                  "$year/$month/$day",
+                  style: _buildTextStyle(appState, dateFontSize),
+                ),
+              ],
             ),
-            Text(
-              "$year/$month/$day",
-              style: _buildTextStyle(appState, dateFontSize),
+          ),
+          if (isLandscape)
+            Positioned(
+              top: 16,
+              right: 16,
+              child: IconButton(
+                icon: const Icon(Icons.settings, color: Colors.white),
+                onPressed: () => widget.onSettingsTap?.call(),
+              ),
             ),
-          ],
-        ),
+        ],
       ),
     );
   }

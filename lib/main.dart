@@ -46,39 +46,42 @@ class HomePage extends StatefulWidget {
 class _HomePageState extends State<HomePage> {
   int _currentIndex = 0;
 
-  final List<Widget> _pages = [const ClockPage(), const SettingsPage()];
-
   @override
   Widget build(BuildContext context) {
     final appState = context.watch<AppState>();
-    bool isLandscape =
-        MediaQuery.of(context).orientation == Orientation.landscape;
 
     return Scaffold(
-      body: _pages[_currentIndex],
-      bottomNavigationBar: isLandscape
-          ? null
-          : BottomNavigationBar(
-              currentIndex: _currentIndex,
-              backgroundColor: Colors.black,
-              selectedItemColor: Colors.white,
-              unselectedItemColor: Colors.grey,
-              onTap: (index) {
-                setState(() {
-                  _currentIndex = index;
-                });
+      body: _currentIndex == 0
+          ? ClockPage(
+              onSettingsTap: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (_) => const SettingsPage()),
+                );
               },
-              items: [
-                BottomNavigationBarItem(
-                  icon: Icon(Icons.access_time),
-                  label: appState.language == 'ja' ? '時計' : 'Clock',
-                ),
-                BottomNavigationBarItem(
-                  icon: Icon(Icons.settings),
-                  label: appState.language == 'ja' ? '設定' : 'Settings',
-                ),
-              ],
-            ),
+            )
+          : const SettingsPage(),
+      bottomNavigationBar: BottomNavigationBar(
+        currentIndex: _currentIndex,
+        backgroundColor: Colors.black,
+        selectedItemColor: Colors.white,
+        unselectedItemColor: Colors.grey,
+        onTap: (index) {
+          setState(() {
+            _currentIndex = index;
+          });
+        },
+        items: [
+          BottomNavigationBarItem(
+            icon: Icon(Icons.access_time),
+            label: appState.language == 'ja' ? '時計' : 'Clock',
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.settings),
+            label: appState.language == 'ja' ? '設定' : 'Settings',
+          ),
+        ],
+      ),
     );
   }
 }

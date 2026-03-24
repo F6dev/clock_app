@@ -15,9 +15,13 @@ class SettingsPage extends StatelessWidget {
       backgroundColor: Colors.black,
       appBar: AppBar(
         backgroundColor: Colors.black,
+        leading: IconButton(
+          icon: const Icon(Icons.arrow_back, color: Colors.white),
+          onPressed: () => Navigator.pop(context),
+        ),
         title: Text(
           appState.language == 'ja' ? '設定' : 'Settings',
-          style: TextStyle(color: Colors.white),
+          style: const TextStyle(color: Colors.white),
         ),
       ),
       body: ListView(
@@ -51,14 +55,20 @@ class SettingsPage extends StatelessWidget {
               style: const TextStyle(color: Colors.white),
             ),
             subtitle: Text(
-              appState.language == 'ja' ? 'スリープしない' : 'Keep awake',
+              appState.coffee
+                  ? (appState.language == 'ja'
+                        ? '有効: アプリを開いている間はスリープしない'
+                        : 'Enabled: Keep awake while the app is open')
+                  : (appState.language == 'ja'
+                        ? '無効: 自動的にスリープする'
+                        : 'Disabled: Auto sleep'),
               style: const TextStyle(color: Colors.grey),
             ),
             value: appState.coffee,
             onChanged: (value) {
               appState.setCoffee(value);
             },
-            activeColor: Colors.white,
+            activeThumbColor: Colors.white,
           ),
           _sectionHeader(appState.language == 'ja' ? '時計設定' : 'Clock Settings'),
           _settingsTile(
