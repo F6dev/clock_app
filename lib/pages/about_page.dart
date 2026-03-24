@@ -225,7 +225,11 @@ class _SudoPage extends StatelessWidget {
                   backgroundColor: Colors.black,
                   foregroundColor: Colors.white,
                 ),
-                child: const Text('More imformation...'),
+                child: Text(
+                  appState.language == 'ja'
+                      ? 'さらに詳しく...'
+                      : 'More information...',
+                ),
               ),
             ),
           ],
