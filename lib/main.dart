@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:google_fonts/google_fonts.dart';
+import 'package:flutter/services.dart';
 import 'app_state.dart';
 import 'pages/clock_page.dart';
 import 'pages/settings_page.dart';
-import 'package:google_fonts/google_fonts.dart';
-import 'package:flutter/services.dart';
 
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
@@ -49,39 +49,46 @@ class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
     final appState = context.watch<AppState>();
+    final isLandscape = MediaQuery.of(context).orientation == Orientation.landscape;
+    final isClockPage = _currentIndex == 0;
+    final showBottomNav = !isLandscape || !isClockPage;
 
     return Scaffold(
       body: _currentIndex == 0
           ? ClockPage(
               onSettingsTap: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(builder: (_) => const SettingsPage()),
-                );
+                if (isLandscape) {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (_) => const SettingsPage()),
+                  );
+                } else {
+                  setState(() => _currentIndex = 1);
+                }
               },
             )
           : const SettingsPage(),
-      bottomNavigationBar: BottomNavigationBar(
-        currentIndex: _currentIndex,
-        backgroundColor: Colors.black,
-        selectedItemColor: Colors.white,
-        unselectedItemColor: Colors.grey,
-        onTap: (index) {
-          setState(() {
-            _currentIndex = index;
-          });
-        },
-        items: [
-          BottomNavigationBarItem(
-            icon: Icon(Icons.access_time),
-            label: appState.language == 'ja' ? '時計' : 'Clock',
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.settings),
-            label: appState.language == 'ja' ? '設定' : 'Settings',
-          ),
-        ],
-      ),
+      bottomNavigationBar: showBottomNav
+          ? BottomNavigationBar(
+              currentIndex: _currentIndex,
+              backgroundColor: Colors.black,
+              selectedItemColor: Colors.white,
+              unselectedItemColor: Colors.grey,
+              onTap: (index) {
+                setState(() => _currentIndex = index);
+              },
+              items: [
+                BottomNavigationBarItem(
+                  icon: const Icon(Icons.access_time),
+                  label: appState.language == 'ja' ? '時計' : 'Clock',
+                ),
+                BottomNavigationBarItem(
+                  icon: const Icon(Icons.settings),
+                  label: appState.language == 'ja' ? '設定' : 'Settings',
+                ),
+              ],
+            )
+          : null,
     );
   }
 }
