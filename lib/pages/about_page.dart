@@ -75,7 +75,7 @@ class _AboutPageState extends State<AboutPage> {
                 ),
                 const SizedBox(height: 4),
                 const Text(
-                  'v1.0',
+                  'v1.1',
                   style: TextStyle(color: Colors.grey, fontSize: 16),
                 ),
               ],
@@ -162,7 +162,7 @@ class _AboutPageState extends State<AboutPage> {
               style: const TextStyle(color: Colors.white),
             ),
             subtitle: const Text(
-              'v1.0-260324',
+              'v1.1-260326',
               style: TextStyle(color: Colors.grey),
             ),
             onTap: () => _onBuildNumberTap(context, appState),
