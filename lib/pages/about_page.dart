@@ -167,6 +167,31 @@ class _AboutPageState extends State<AboutPage> {
             ),
             onTap: () => _onBuildNumberTap(context, appState),
           ),
+          const Divider(color: Colors.grey),
+          Padding(
+            padding: const EdgeInsets.all(16),
+            child: Text(
+              appState.language == 'ja' ? 'ライセンス' : 'License',
+              style: const TextStyle(color: Colors.grey, fontSize: 14),
+            ),
+          ),
+          Padding(
+            padding: const EdgeInsets.fromLTRB(16, 0, 16, 16),
+            child: Text(
+              'MIT License\nCopyright (c) 2026 @Lunar',
+              style: const TextStyle(color: Colors.white, fontSize: 14),
+            ),
+          ),
+          ListTile(
+            title: Text(
+              appState.language == 'ja' ? 'ライセンス全文' : 'Full License',
+              style: const TextStyle(color: Colors.white),
+            ),
+            trailing: const Icon(Icons.open_in_new, color: Colors.grey),
+            onTap: () => _launchUrl(
+              'https://github.com/F6dev/clock_app/blob/dev/LICENSE.txt',
+            ),
+          ),
         ],
       ),
     );
