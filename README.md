@@ -46,6 +46,14 @@ Linux: 未対応
 ## アプリの時間の調整 (ベータ版)
 アプリ内での一日の開始時間と終了時間を決めることで、時計の速度などを変更して時刻をカスタマイズすることができます。
 
+## Build
+Flutter 3.41.5
+Run this
+```
+flutter pub get
+flutter build apk --release
+```
+
 
 <!-- ## メモ
 フォント関係かな
