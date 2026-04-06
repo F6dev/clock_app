@@ -16,6 +16,7 @@ class FontSettingsPage extends StatelessWidget {
     {'name': 'Oswald', 'family': 'Oswald', 'isLocal': false},
     {'name': 'Raleway', 'family': 'Raleway', 'isLocal': false},
     {'name': 'Nunito', 'family': 'Nunito', 'isLocal': false},
+    {'name': 'Potta One', 'family': 'Potta One', 'isLocal': false},
   ];
 
   @override

@@ -36,6 +36,7 @@ Linux: 未対応
 - [Oswald](https://fonts.google.com/specimen/Oswald)
 - [Raleway](https://fonts.google.com/specimen/Raleway)
 - [Nunito](https://fonts.google.com/specimen/Nunito)
+- [Potta One](https://fonts.google.com/specimen/Potta+One)
 
 ※ デバイスでカスタムフォントを設定している場合、フォントが変更できない可能性があります。
 

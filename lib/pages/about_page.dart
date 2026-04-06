@@ -61,7 +61,7 @@ class _AboutPageState extends State<AboutPage> {
             child: Column(
               children: [
                 ClipRRect(
-                  borderRadius: BorderRadius.circular(16),
+                  borderRadius: BorderRadius.circular(40),
                   child: Image.asset(
                     'assets/launcher_icon/android_icon.png',
                     width: 80,
@@ -75,7 +75,7 @@ class _AboutPageState extends State<AboutPage> {
                 ),
                 const SizedBox(height: 4),
                 const Text(
-                  'v1.1',
+                  'v1.2',
                   style: TextStyle(color: Colors.grey, fontSize: 16),
                 ),
               ],
@@ -162,7 +162,7 @@ class _AboutPageState extends State<AboutPage> {
               style: const TextStyle(color: Colors.white),
             ),
             subtitle: const Text(
-              'v1.1-260326',
+              'v1.2-260406',
               style: TextStyle(color: Colors.grey),
             ),
             onTap: () => _onBuildNumberTap(context, appState),
